@@ -11,30 +11,31 @@
 
 <body>
 
+<h1>{{title}}</h1>
 
-  <form autocomplete="off" action="/addData" method="POST">
-  
-  {{!-- <input type="hidden" name="_id" value="{{view._id}}" > --}}
+  <form autocomplete="off" action="/edit/{{data.id}}" method="POST">
+
+    {{!-- <input type="hidden" name="_id" value="{{view._id}}"> --}}
     <div class="mb-2" style="width: 200px;">
       <label for="exampleInputEmail1" class="form-label">name</label>
-      <input type="text" class="form-control" id="exampleInputEmail1" name="name" required aria-describedby="emailHelp">
+      <input type="text" class="form-control" id="exampleInputEmail1" name="name" value="{{data.name}}" required aria-describedby="emailHelp">
     </div>
     <div class="mb-2" style="width: 200px;">
       <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" name="email" required
+      <input type="email" class="form-control" id="exampleInputEmail1" name="email" value="{{data.email}}" required
         aria-describedby="emailHelp">
     </div>
     <div class="mb-2" style="width: 200px;">
       <label for="exampleInputEmail1" class="form-label">password</label>
-      <input type="password" class="form-control" id="exampleInputEmail1" name="password" required
+      <input type="password" class="form-control" id="exampleInputEmail1" name="password" value="{{data.password}}" required
         aria-describedby="emailHelp">
     </div>
     <div class="mb-2" style="width: 200px;">
       <label for="exampleInputPassword1" class="form-label">city</label>
-      <input type="text" class="form-control" name="city" required id="exampleInputPassword1">
+      <input type="text" class="form-control" name="city" value="{{data.city}}" required id="exampleInputPassword1">
     </div>
-
-    <button type="submit" class="btn btn-primary" onclick="return confirm(form submited);">Submit</button>
+    <button type="submit" class="btn btn-danger" onclick="update the record">update</button>
+   
     <a class="btn btn-success" href="/addData">view data</a>
   </form>
 

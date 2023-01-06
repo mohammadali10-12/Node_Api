@@ -33,8 +33,15 @@
                 <td>{{this.password}}</td>
                 <td>{{this.city}}</td>
                 <td>
-                    <a class="btn btn-primary" href="/addData/{{this._id}}">Edit</a> 
-                    <a class="btn btn-danger" href="">Delete</a>
+                    <form action="/edit/{{this._id}}" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </form>
+                    <form action="/edit/delete/{{this._id}}" method="post" class="d-inline">
+
+                    <button class="btn btn-danger" type="submit" onclick="return confirm('are you sure this data is deleted ?');">Delete</button>
+                    </form>
+            
+                       
                 </td>
 
 

@@ -4,8 +4,7 @@ const express = require("express");
 const router = new express.Router();
 
 const Book = require('../model/book');
-const user = require('../model/user');
-
+const User = require('../model/user');
 
 
 
@@ -19,7 +18,7 @@ router.get('/addAndEdit',(req,resp)=>{
 
 // view data
 router.get('/addData', async (req,resp)=>{
-  const detail = await user.find();
+  const detail = await User.find();
   resp.render('addData',{
   title:'USERS DETAILS',
   users:detail
@@ -27,35 +26,70 @@ router.get('/addData', async (req,resp)=>{
 });
 
 // insert data
-router.post('/add', async (req,resp)=>{
+router.post('/addData', async (req,resp)=>{
   try {
-    const addData = await user.create(req.body);
-    const data = await addData;
-    resp.status(200).redirect('/addData');
-   
+    const addUser = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      city: req.body.city
+    })
+    const user = await addUser.save();
+    req.flash("success", "Your message");
+    resp.status(201).redirect('/addAndEdit');
+  
   } catch (error) {
     resp.status(500).send(error)
   }
 });
 
+// 
+router.get('/edit/:id', async (req,resp)=>{
+
+  try {
+    const editData = await User.findById(req.params.id);
+
+  resp.render('edit',{
+    title:'update Data',
+    data:editData
+  });
+  // resp.status(201).render('edit');
+  } catch (error) {
+    resp.statu(500).send(error)
+  }
+  
+})
+
 // update data
 
-router.get('/addData/:id',  (req,resp)=>{
+router.post('/edit/:id', async (req,resp)=>{
+
     try {
-      
-       user.findById(req.params.id,(err,doc)=>{
-        if (!err) {
-          resp.render('addData',{
-            viewTitle:'Update Data',
-            view:doc
-          });
-        }
-      });
-     
-      resp.status(200).send(data);
+ 
+     const _id = req.params.id;
+     const userData = await User.findByIdAndUpdate(_id,req.body);
+    
+      resp.status(200);
+      resp.redirect('/addData')
+    
     } catch (error) {
       resp.status(500).send(error);
     }
+})
+
+// delete data
+
+router.post('/edit/delete/:id', async (req,resp)=>{
+  try {
+       const _id = req.params.id;
+       const deleteUser = await User.findByIdAndDelete(_id);
+        
+       resp.status(201);
+       resp.redirect('/addData');
+
+  } catch (error) {
+    resp.status(500).send(error)
+  }
 })
 
 // insert data
